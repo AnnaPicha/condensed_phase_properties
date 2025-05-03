@@ -1,6 +1,6 @@
 """Condensed phase properties namespace."""
 
-from importlib_metadata import PackageNotFoundError, version
+from importlib.metadata import PackageNotFoundError, version
 
 __author__ = "Anna Picha"
 __email__ = "anna.picha@gmail.com"
