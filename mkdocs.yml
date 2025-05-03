@@ -1,0 +1,34 @@
+---
+# Project Information
+site_name: Condensed phase properties
+site_author: Anna Picha
+site_description: condensed_phase_properties contains tha scripts and exemplary input data that were used to simulate and analyse presented data
+
+# Repository information
+repo_name: apicha/condensed-phase-properties
+repo_url: https://github.com/apicha/condensed-phase-properties
+edit_uri: ""
+
+# Copyright
+copyright: Copyright &copy; 2020 Anna Picha
+
+# Configuration
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tabs
+  language: en
+
+# Footer
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/apicha
+      name: apicha on GitHub
+
+# Page tree
+nav:
+  - Home: index.md

@@ -1,0 +1,53 @@
+[tool]
+
+[tool.poetry]
+name = "condensed_phase_properties"
+version = "0.0.0"
+homepage = "https://github.com/apicha/condensed-phase-properties"
+description = "condensed_phase_properties contains tha scripts and exemplary input data that were used to simulate and analyse presented data"
+authors = ["Anna Picha <anna.picha@gmail.com>"]
+readme = "README.md"
+license =  "MIT"
+classifiers=[
+    'License :: OSI Approved :: MIT License',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+]
+include = [
+    "LICENSE",
+    "condensed_phase_properties/py.typed"
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+importlib_metadata = "^3.4.0"
+
+[tool.poetry.dev-dependencies]
+mkdocs-material = "^6.1.5"
+pytest = "^6.0"
+pytest-cov = "^2.10.1"
+flake8 = "^4.0.0"
+flake8-docstrings = "1.6.0"
+flake8-import-order = "0.18.1"
+flake8-colors = "0.1.8"
+pylint = "^2.6.0"
+black = "22.3.0"
+mypy = "0.960"
+
+[tool.black]
+line-length=100
+
+[tool.pylint.reports]
+output-format="colorized"
+reports="y"
+include-ids="yes"
+msg-template="{msg_id}:{line:3d},{column}: {obj}: {msg}"
+
+[tool.pytest.ini_options]
+addopts = "--cov=condensed_phase_properties --cov-branch --cov-report term-missing  -vv --color=yes --cov-fail-under 100"
+python_files = "tests.py test_*.py *_tests.py"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
