@@ -29,27 +29,6 @@ import argparse
 
 torch._C._jit_set_nvfuser_enabled(False)
 
-# def gen_box(psf, crd):
-#     coords = crd.positions
-
-#     min_crds = [coords[0][0], coords[0][1], coords[0][2]]
-#     max_crds = [coords[0][0], coords[0][1], coords[0][2]]
-
-#     for coord in coords:
-#         min_crds[0] = min(min_crds[0], coord[0])
-#         min_crds[1] = min(min_crds[1], coord[1])
-#         min_crds[2] = min(min_crds[2], coord[2])
-#         max_crds[0] = max(max_crds[0], coord[0])
-#         max_crds[1] = max(max_crds[1], coord[1])
-#         max_crds[2] = max(max_crds[2], coord[2])
-
-#     boxlx = max_crds[0] - min_crds[0]
-#     boxly = max_crds[1] - min_crds[1]
-#     boxlz = max_crds[2] - min_crds[2]
-
-#     psf.setBox(boxlx, boxly, boxlz)
-#     return psf
-
 theory      = sys.argv[1]          # mm/ani2x/mace-s/mace-m/mace-l
 system_name = sys.argv[2]          # mono/moh323
 ensemble    = sys.argv[3]
