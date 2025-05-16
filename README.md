@@ -19,9 +19,9 @@ condensed_phase_properties contains the scripts and exemplary input data that we
 ## Features
 
 The functions computing condensed phase properties use openff-toolkit, which has not been released for python 3.13 yet. So create an environment with python==3.12. Then, 
-install this package with pip install .
-install openff-toolkit
-and install pandas.
+- install this package with pip install .
+- install openff-toolkit
+- and install pandas.
 
 
 ## Credits
