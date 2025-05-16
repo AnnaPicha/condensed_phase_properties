@@ -9,7 +9,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 
-condensed_phase_properties contains tha scripts and exemplary input data that were used to simulate and analyse presented data
+condensed_phase_properties contains the scripts and exemplary input data that were used to simulate and analyse presented data
 
 
 - Free software: MIT
