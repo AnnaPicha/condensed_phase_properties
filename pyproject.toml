@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "condensed_phase_properties"
-version = "0.0.0"
+version = "0.1.0"
 homepage = "https://github.com/apicha/condensed-phase-properties"
 description = "condensed_phase_properties contains tha scripts and exemplary input data that were used to simulate and analyse presented data"
 authors = ["Anna Picha <anna.picha@gmail.com>"]
