@@ -14,9 +14,15 @@ classifiers=[
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
 ]
+
+packages = [
+    { include = "condensed_phase_properties" },
+]
+
 include = [
     "LICENSE",
-    "condensed_phase_properties/py.typed"
+    "condensed_phase_properties/py.typed",
+    "condensed_phase_properties/data/**/*"
 ]
 
 [tool.poetry.dependencies]
