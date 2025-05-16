@@ -21,42 +21,17 @@ def get_gas_traj(method: str):
     return csv_complete
 
 
-mm_wat_liquid = get_liquid_traj("mm", 1, 11)
-mm_wat_gas = get_gas_traj("mm")
-
-ani2x_wat_liquid = get_liquid_traj("ani2x", 1, 11)
-ani2x_wat_gas = get_gas_traj("ani2x")
-
-mace_s_wat_liquid = get_liquid_traj("mace_s", 1, 11)
-mace_s_wat_gas = get_gas_traj("mace_s")
-
-mace_m_wat_liquid = get_liquid_traj("mace_m", 1, 11)
-mace_m_wat_gas = get_gas_traj("mace_m")
-
 
 skip_size = 0.090909
 box_count=572
 molar_mass = 18.015 * unit.gram / unit.mole
 
 theories = ['mm', 'ani2x', 'mace_s', 'mace_m']
-data_liquid = {
-    'mm' :     mm_wat_liquid,
-    'ani2x' :  ani2x_wat_liquid,
-    'mace_s' : mace_s_wat_liquid,
-    'mace_m' : mace_m_wat_liquid
-}
-
-data_gas = {
-    'mm' :     mm_wat_gas,
-    'ani2x' :  ani2x_wat_gas,
-    'mace_s' : mace_s_wat_gas,
-    'mace_m' : mace_m_wat_gas
-}
 
 print("\nCOMPUTING CONDENSED PHASE PROPERTIES\n")
 for theory in theories:
-    liquid = data_liquid[theory]
-    gas = data_gas[theory]
+    liquid = get_liquid_traj(theory, 1, 11)
+    gas = get_gas_traj(theory)
 
     skip_part_gas = int(round(gas["Potential Energy (kJ/mole)"].count()*skip_size,0))
     gas_cut = gas[skip_part_gas-1:-1] # skip the first 10%
