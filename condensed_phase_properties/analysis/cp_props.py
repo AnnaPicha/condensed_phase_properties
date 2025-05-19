@@ -4,8 +4,11 @@ from openff.units import unit
 
 
 
-R   = 8.31446261815324 # gas constant in J/mol/Kelvin
-k_B = 1.380649 *10**(-23) #J/K
+R   = 8.31446261815324 
+k_B = 1.380649 *10**(-23) 
+
+gas_constant=R*unit.joule/unit.mole/unit.kelvin
+boltzmann_constant=k_B*unit.joule/unit.kelvin
 
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,20 +17,30 @@ k_B = 1.380649 *10**(-23) #J/K
 # define NPT properties -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def calc_heat_capacity_units(total_energy: float, number_particles : int, temp : float, molar_mass : float, printing : bool):
-    gas_constant = 8.31446261815324 * unit.joule / unit.mole / unit.kelvin #J * mol-1 * K-1
+    '''
+        This function computes the heat capacity of a homogenious liquid using data from an NPT simulation:
+        C_p = Variance(Total energy) / (number_particles * temp^2 * gas constant)
+        the return value is in units cal/mole/kelvin
+        for a correct unit transformation, the molar mass is required
+    '''
+
     pot_var = total_energy.var() * (unit.kilojoule / unit.mole)**2
     temp = temp*unit.kelvin
 
-    val = pot_var/number_particles/temp**2/gas_constant #factor 10**6 converts kj from total_energy data to J to match unit of the gas constant
+    val = pot_var/number_particles/temp**2/gas_constant 
     val = val.to(unit.cal / unit.mole / unit.kelvin) / molar_mass
-    #heat_capacity["ani2x"].to(unit.cal / unit.mole / unit.kelvin)/molar_mass_water
     if (printing):
         print("heat capacity: ", val)
     return val
 
 def calc_thermal_expansion(total_energy: float, volume: float, temp: float, printing : bool):
+    '''
+        This function computes the coefficient of thermal expansion of a homogenious liquid using data from an NPT simulation:
+        alpha = Covariance(Total energy, box volume) / (box volume * temp^2 * gas constant)
+        the return value is in units 1/Kelvin
+    '''
+
     cov_en_vol = np.cov(total_energy,volume)[0][1]*(unit.nanometer**3)* unit.kJ / unit.mole
-    gas_constant=R*unit.joule/unit.mole/unit.kelvin
     T=temp*unit.kelvin
     volume=volume.mean()*(unit.nanometer**3)
     alpha = cov_en_vol/gas_constant/T**2/volume
@@ -37,9 +50,14 @@ def calc_thermal_expansion(total_energy: float, volume: float, temp: float, prin
     return alpha_shift
 
 def calc_isothermal_compressibility(volume : float, temp : float, printing : bool):
+    '''
+        This function computes the isothermal compressibility of a homogenious liquid using data from an NPT simulation:
+        kappa = Variance(Box volume) / (k_B * temperature * volume)
+        the return value is in units 1/bar
+    '''
+
     volume_var = volume.var()*(unit.nanometer**3)**2
     volume_mean = volume.mean()*(unit.nanometer**3)
-    boltzmann_constant=k_B*unit.joule/unit.kelvin
     T=temp*unit.kelvin
 
     val = volume_var/boltzmann_constant/T/volume_mean
@@ -49,7 +67,12 @@ def calc_isothermal_compressibility(volume : float, temp : float, printing : boo
     return val
 
 def calc_heat_of_vaporization (pot_energy: float, pot_energy_mono: float, temp_traj: float, box_count : int, printing: bool):
-    gas_constant = 8.31446261815324 * unit.joule / unit.mole / unit.kelvin #J * mol-1 * K-1if system=="moh323":
+    '''
+        This function computes the heat of vaporization of a homogenious liquid using data from an NPT simulation:
+        Delta H_vap = mean_energy_gas - mean_energy_liquid + R*temperature
+        the return value is in units kJ
+    '''
+
     pot_mean = pot_energy.mean() * unit.kilojoule/unit.mole / box_count
     pot_mono_mean = pot_energy_mono.mean() * unit.kilojoule/unit.mole
     temp_mean = temp_traj.mean() * unit.kelvin
