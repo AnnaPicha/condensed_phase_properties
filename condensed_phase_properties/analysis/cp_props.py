@@ -4,7 +4,7 @@ from openff.units import unit
 
 
 
-R   = 8.31446261815324 
+R   = 8.31446261815324   
 k_B = 1.380649 *10**(-23) 
 
 gas_constant=R*unit.joule/unit.mole/unit.kelvin
