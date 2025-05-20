@@ -4,7 +4,7 @@ from importlib import resources  # Python ≥ 3.9
 from openff.units import unit
 
 def load_csv(filename: str, method: str) -> pd.DataFrame:
-    data_path = resources.files(f"condensed_phase_properties.data.water.{method}") / filename
+    data_path = resources.files(f"condensed_phase_properties.data.water_traj.{method}") / filename
     with data_path.open("r", encoding="utf-8") as f:
         return pd.read_csv(f, sep="\t")
     
