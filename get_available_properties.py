@@ -20,6 +20,17 @@ def load_repetition_properties(species: str, method: str):
     data_path = resources.files(f"condensed_phase_properties.data.all_property_data.{species}.thermodynamic_properties.5_repetition_runs") / file_name
     with data_path.open("r", encoding="utf-8") as f:
         return pd.read_csv(f, sep="&")
+    
+def load_msd_diffusion(species: str, method: str):
+    file_name_diffusion = f"diffusion_{species}_{method}_NVT_NH.dat"
+    data_path = resources.files(f"condensed_phase_properties.data.all_property_data.{species}.diffusion") / file_name_diffusion
+    with data_path.open("r", encoding="utf-8") as f:
+        diffusion = pd.read_csv(f, sep="&")
+    file_name_msd = f"msd_{species}_{method}_NVT_NH.dat"
+    data_path = resources.files(f"condensed_phase_properties.data.all_property_data.{species}.diffusion") / file_name_msd
+    with data_path.open("r", encoding="utf-8") as f:
+        msd = pd.read_csv(f, sep="&")
+    return msd, diffusion
 
 
 species = sys.argv[1]
@@ -39,3 +50,10 @@ for theory in ['mm', 'ani2x', 'mace_s']:
     print("-"*50)
     print("\n")
 
+for theory in ['mm', 'ani2x', 'mace_s']:
+    msd, diffusion = load_msd_diffusion(species, theory)
+    print(f"Diffusion coefficient for {theory} {species}")
+    print(diffusion.columns[0])
+    print("-"*50)
+
+print("\n")
