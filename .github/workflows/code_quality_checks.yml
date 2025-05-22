@@ -30,3 +30,6 @@ jobs:
 
       - name: Check type hinting with mypy
         run: poetry run mypy --strict --config-file=mypy.ini condensed_phase_properties/
+
+      - name: Check type hinting with mypy
+        run: poetry run mypy --strict condensed_phase_properties/
