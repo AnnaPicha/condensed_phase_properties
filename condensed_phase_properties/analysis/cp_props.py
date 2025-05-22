@@ -1,22 +1,25 @@
 """Analysis package for condensed phase properties."""
 import numpy as np
 from openff.units import unit
+from pint import Quantity
+from collections import namedtuple
 
 
-R = 8.31446261815324
-k_B = 1.380649 * 10 ** (-23)
+Constants = namedtuple('Constants', ['GAS_CONSTANT', 'BOLTZMANN_CONSTANT'])
 
-gas_constant = R * unit.joule / unit.mole / unit.kelvin
-boltzmann_constant = k_B * unit.joule / unit.kelvin
+CONSTANTS = Constants(
+    GAS_CONSTANT=8.31446261815324 * unit.joule / unit.mole / unit.kelvin,
+    BOLTZMANN_CONSTANT=1.380649e-23 * unit.joule / unit.kelvin,
+)
 
 
 def calc_heat_capacity_units(
-    total_energy: float,
+    total_energy: np.ndarray,
     number_particles: int,
     temp: float,
     molar_mass: float,
     printing: bool
-):
+) -> Quantity:
     """
     Compute the heat capacity.
 
@@ -27,7 +30,7 @@ def calc_heat_capacity_units(
     pot_var = total_energy.var() * (unit.kilojoule / unit.mole) ** 2
     temp = temp * unit.kelvin
 
-    val = pot_var / number_particles / temp**2 / gas_constant
+    val = pot_var / number_particles / temp**2 / CONSTANTS.GAS_CONSTANT
     val = val.to(unit.cal / unit.mole / unit.kelvin) / molar_mass
     if printing:
         print("heat capacity: ", val)
@@ -35,11 +38,11 @@ def calc_heat_capacity_units(
 
 
 def calc_thermal_expansion(
-        total_energy: float,
-        volume: float,
+        total_energy: np.ndarray,
+        volume: np.ndarray,
         temp: float,
         printing: bool
-):
+) -> Quantity:
     """
     Compute the coefficient of thermal expansion.
 
@@ -52,7 +55,7 @@ def calc_thermal_expansion(
     )
     T = temp * unit.kelvin
     volume = volume.mean() * (unit.nanometer**3)
-    alpha = cov_en_vol / gas_constant / T**2 / volume
+    alpha = cov_en_vol / CONSTANTS.GAS_CONSTANT / T**2 / volume
     alpha_shift = alpha.to(1 / unit.kelvin)
     if printing:
         print("thermal expansion: ", alpha_shift)
@@ -60,10 +63,10 @@ def calc_thermal_expansion(
 
 
 def calc_isothermal_compressibility(
-        volume: float,
+        volume: np.ndarray,
         temp: float,
         printing: bool
-):
+) -> Quantity:
     """
     Compute the isothermal compressibility.
 
@@ -74,7 +77,7 @@ def calc_isothermal_compressibility(
     volume_mean = volume.mean() * (unit.nanometer**3)
     T = temp * unit.kelvin
 
-    val = volume_var / boltzmann_constant / T / volume_mean
+    val = volume_var / CONSTANTS.BOLTZMANN_CONSTANT / T / volume_mean
     val = val.to(1 / unit.bar)
     if printing:
         print("thermal expansion: ", val)
@@ -82,12 +85,12 @@ def calc_isothermal_compressibility(
 
 
 def calc_heat_of_vaporization(
-    pot_energy: float,
-    pot_energy_mono: float,
-    temp_traj: float,
+    pot_energy: np.ndarray,
+    pot_energy_mono: np.ndarray,
+    temp_traj: np.ndarray,
     box_count: int,
     printing: bool
-):
+) -> Quantity:
     """
     Compute the heat of vaporization.
 
@@ -97,7 +100,7 @@ def calc_heat_of_vaporization(
     pot_mean = pot_energy.mean() * unit.kilojoule / unit.mole / box_count
     pot_mono_mean = pot_energy_mono.mean() * unit.kilojoule / unit.mole
     temp_mean = temp_traj.mean() * unit.kelvin
-    val = pot_mono_mean - pot_mean + gas_constant * temp_mean
+    val = pot_mono_mean - pot_mean + CONSTANTS.GAS_CONSTANT * temp_mean
     if printing:
         print("heat of vaporozation: ", val)
     return val
@@ -109,7 +112,7 @@ def my_bootstrap_hov(
         liquid_temp: float,
         Nboot: int,
         statfun
-):
+) -> np.ndarray:
     """Calculate bootstrap statistics for a sample x."""
     liquid_pot = np.array(liquid_pot)
     liquid_temp = np.array(liquid_temp)
@@ -137,7 +140,7 @@ def my_bootstrap_hcap(
         liquid_temp: float,
         Nboot: int,
         statfun
-):
+) -> np.ndarray:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
     liquid_temp = np.array(liquid_temp)
@@ -164,7 +167,7 @@ def my_bootstrap_texp(
         liquid_temp: float,
         Nboot: int,
         statfun
-):
+) -> np.ndarray:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
     box_vol = np.array(box_vol)
@@ -192,7 +195,7 @@ def my_bootstrap_icomp(
         liquid_temp: float,
         Nboot: int,
         statfun
-):
+) -> np.ndarray:
     """Calculate bootstrap statistics for a sample x."""
     box_vol = np.array(box_vol)
     liquid_temp = np.array(liquid_temp)

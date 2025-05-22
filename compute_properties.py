@@ -39,10 +39,34 @@ for theory in theories:
     skip_part_liquid = int(round(liquid["Potential Energy (kJ/mole)"].count()*skip_size,0))
     liquid_cut = liquid[skip_part_liquid-1:-1] # skip the first 10%
     
-    heat_capacity = analysis.calc_heat_capacity_units(liquid_cut["Total Energy (kJ/mole)"], box_count, liquid_cut["Temperature (K)"].mean(), molar_mass, False)
-    thermal_expansion = analysis.calc_thermal_expansion(liquid_cut["Total Energy (kJ/mole)"], liquid_cut["Box Volume (nm^3)"], liquid_cut["Temperature (K)"].mean(), False)
-    iso_comp = analysis.calc_isothermal_compressibility(liquid_cut["Box Volume (nm^3)"], liquid_cut["Temperature (K)"].mean(), False)
-    hov = analysis.calc_heat_of_vaporization (liquid_cut["Potential Energy (kJ/mole)"], gas_cut["Potential Energy (kJ/mole)"], liquid_cut["Temperature (K)"], box_count, False)
+    heat_capacity = analysis.calc_heat_capacity_units(
+        liquid_cut["Total Energy (kJ/mole)"].to_numpy(), 
+        box_count, 
+        liquid_cut["Temperature (K)"].mean(), 
+        molar_mass, 
+        False
+    )
+    
+    thermal_expansion = analysis.calc_thermal_expansion(
+        liquid_cut["Total Energy (kJ/mole)"].to_numpy(), 
+        liquid_cut["Box Volume (nm^3)"].to_numpy(), 
+        liquid_cut["Temperature (K)"].mean(), 
+        False
+    )
+    
+    iso_comp = analysis.calc_isothermal_compressibility(
+        liquid_cut["Box Volume (nm^3)"].to_numpy(), 
+        liquid_cut["Temperature (K)"].mean(), 
+        False
+    )
+    hov = analysis.calc_heat_of_vaporization (
+        liquid_cut["Potential Energy (kJ/mole)"].to_numpy(), 
+        gas_cut["Potential Energy (kJ/mole)"].to_numpy(), 
+        liquid_cut["Temperature (K)"].to_numpy(), 
+        box_count, 
+        False
+    )
+
     density = liquid_cut["Density (g/mL)"].mean()
     
     print(f"{'Property':35} {'Model':10} {'Value':>10} {'Unit':>25}")
