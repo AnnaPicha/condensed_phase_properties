@@ -27,11 +27,11 @@ include = [
 python = "^3.7"
 importlib_metadata = ">=4.11.4,<5.0.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 mkdocs-material = "^6.1.5"
 pytest = "^6.0"
 pytest-cov = "^2.10.1"
-flake8 = "^4.0.0"
+flake8 = "^6.1.0" 
 flake8-docstrings = "1.6.0"
 flake8-import-order = "0.18.1"
 flake8-colors = "0.1.8"
