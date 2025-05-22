@@ -1,8 +1,9 @@
 # Condensed phase properties
 
-
+<!-- 
 [![PyPI version](https://badge.fury.io/py/condensed-phase-properties.svg)](https://badge.fury.io/py/condensed-phase-properties)
 ![versions](https://img.shields.io/pypi/pyversions/condensed-phase-properties.svg)
+-->
 [![GitHub license](https://img.shields.io/github/license/mgancita/condensed-phase-properties.svg)](https://github.com/mgancita/condensed-phase-properties/blob/main/LICENSE)
 
 
