@@ -50,10 +50,13 @@ for theory in ['mm', 'ani2x', 'mace_s']:
     print("-"*50)
     print("\n")
 
-for theory in ['mm', 'ani2x', 'mace_s']:
-    msd, diffusion = load_msd_diffusion(species, theory)
-    print(f"Diffusion coefficient for {theory} {species}")
-    print(diffusion.columns[0])
-    print("-"*50)
+if species!="nma":
+    for theory in ['mm', 'ani2x', 'mace_s']:
+        msd, diffusion = load_msd_diffusion(species, theory)
+        print(f"Diffusion coefficient for {theory} {species}")
+        print(diffusion.columns[0])
+        print("-"*50)
+else:
+    print("No diffusion data for NMA available!")
 
 print("\n")
