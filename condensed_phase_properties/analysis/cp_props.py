@@ -1,7 +1,9 @@
 """Analysis package for condensed phase properties."""
 import numpy as np
+from numpy.typing import NDArray
 from openff.units import unit
 from pint import Quantity
+from typing import cast
 from collections import namedtuple
 
 
@@ -14,7 +16,7 @@ CONSTANTS = Constants(
 
 
 def calc_heat_capacity_units(
-    total_energy: np.ndarray,
+    total_energy: NDArray[np.float64],
     number_particles: int,
     temp: float,
     molar_mass: float,
@@ -30,7 +32,12 @@ def calc_heat_capacity_units(
     pot_var = total_energy.var() * (unit.kilojoule / unit.mole) ** 2
     temp = temp * unit.kelvin
 
-    val = pot_var / number_particles / temp**2 / CONSTANTS.GAS_CONSTANT
+    val = cast(Quantity,
+               pot_var
+               / number_particles
+               / temp**2
+               / CONSTANTS.GAS_CONSTANT
+               )
     val = val.to(unit.cal / unit.mole / unit.kelvin) / molar_mass
     if printing:
         print("heat capacity: ", val)
@@ -38,8 +45,8 @@ def calc_heat_capacity_units(
 
 
 def calc_thermal_expansion(
-        total_energy: np.ndarray,
-        volume: np.ndarray,
+        total_energy: NDArray[np.float64],
+        volume: NDArray[np.float64],
         temp: float,
         printing: bool
 ) -> Quantity:
@@ -49,21 +56,24 @@ def calc_thermal_expansion(
     alpha = Cov(energy, vol) / (vol * temp^2 * gas constant)
     the return value is in units 1/Kelvin
     """
-    cov_en_vol = (
-        np.cov(total_energy,
-               volume)[0][1] * (unit.nanometer**3) * unit.kJ / unit.mole
-    )
+    cov_en_vol = cast(Quantity,
+                      np.cov(total_energy, volume)[0][1]
+                      * (unit.nanometer**3)
+                      * unit.kJ / unit.mole
+                      )
+
     T = temp * unit.kelvin
     volume = volume.mean() * (unit.nanometer**3)
+
     alpha = cov_en_vol / CONSTANTS.GAS_CONSTANT / T**2 / volume
-    alpha_shift = alpha.to(1 / unit.kelvin)
+    alpha_shift = cast(Quantity, alpha.to(1 / unit.kelvin))
     if printing:
         print("thermal expansion: ", alpha_shift)
     return alpha_shift
 
 
 def calc_isothermal_compressibility(
-        volume: np.ndarray,
+        volume: NDArray[np.float64],
         temp: float,
         printing: bool
 ) -> Quantity:
@@ -85,9 +95,9 @@ def calc_isothermal_compressibility(
 
 
 def calc_heat_of_vaporization(
-    pot_energy: np.ndarray,
-    pot_energy_mono: np.ndarray,
-    temp_traj: np.ndarray,
+    pot_energy: NDArray[np.float64],
+    pot_energy_mono: NDArray[np.float64],
+    temp_traj: NDArray[np.float64],
     box_count: int,
     printing: bool
 ) -> Quantity:
@@ -112,7 +122,7 @@ def my_bootstrap_hov(
         liquid_temp: float,
         Nboot: int,
         statfun
-) -> np.ndarray:
+) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_pot = np.array(liquid_pot)
     liquid_temp = np.array(liquid_temp)
@@ -140,7 +150,7 @@ def my_bootstrap_hcap(
         liquid_temp: float,
         Nboot: int,
         statfun
-) -> np.ndarray:
+) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
     liquid_temp = np.array(liquid_temp)
@@ -167,7 +177,7 @@ def my_bootstrap_texp(
         liquid_temp: float,
         Nboot: int,
         statfun
-) -> np.ndarray:
+) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
     box_vol = np.array(box_vol)
@@ -195,7 +205,7 @@ def my_bootstrap_icomp(
         liquid_temp: float,
         Nboot: int,
         statfun
-) -> np.ndarray:
+) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     box_vol = np.array(box_vol)
     liquid_temp = np.array(liquid_temp)
