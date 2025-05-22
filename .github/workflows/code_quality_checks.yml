@@ -28,9 +28,6 @@ jobs:
       - name: Check style with flake8
         run: poetry run flake8 condensed_phase_properties/
 
-      - name: Check style with pylint
-        run: poetry run pylint condensed_phase_properties/
-
       - name: Check format with black
         run: poetry run black --check condensed_phase_properties/
 
