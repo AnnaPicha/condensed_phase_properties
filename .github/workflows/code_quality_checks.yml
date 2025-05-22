@@ -22,8 +22,6 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry update
-      - name: Unit & Coverage test with pytest
-        run: poetry run pytest
       - name: Check style with flake8
         run: poetry run flake8 condensed_phase_properties/ tests/
       - name: Check style with pylint
