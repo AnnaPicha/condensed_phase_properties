@@ -16,7 +16,7 @@ This repo condensed_phase_properties contains the functions and exemplary input 
 
 
 - Free software: MIT
-- Documentation: https://apicha.github.io/condensed-phase-properties.
+- Documentation: https://github.com/AnnaPicha/condensed_phase_properties/.
 
 
 ## Features
