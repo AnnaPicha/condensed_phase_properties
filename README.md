@@ -29,13 +29,13 @@ All functions used to compute thermodynamic properties can be found in the analy
 
 ## Examplary scripts
 
-The python script 'compute_properties.py' uses the water report in the data folder and the property functions in the 'cp_props.py' script to compute and print thermodynamic properties. The python script 'get_available_properties.py' collects and prints the raw data (stored in the data folder) for a given species. To execute those scripts (once installed this repository), run
+The python script 'compute_properties.py' uses the water report in the data folder and the property functions in the '''cp_props.py''' script to compute and print thermodynamic properties. The python script '''get_available_properties.py''' collects and prints the raw data (stored in the data folder) for a given species. To execute those scripts (once installed this repository), run
 
-- python compute_properties.py
+- '''python compute_properties.py'''
 
 or
 
-- python get_available_properties.py water
+- '''python get_available_properties.py water'''
 
 water can be replaced by methanol, acetone, nma, benzene or hexane.
 
