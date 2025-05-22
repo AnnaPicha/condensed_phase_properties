@@ -1,0 +1,7 @@
+site_name: Condensed Phase Properties
+repo_url: https://github.com/AnnaPicha/condensed_phase_properties
+theme:
+  name: material
+
+nav:
+  - Home: index.md
