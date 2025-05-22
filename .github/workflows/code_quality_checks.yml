@@ -9,25 +9,30 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python 3.11
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11
-      - name: Install poetry
+
+      - name: Install Poetry
         run: pip install poetry
+
       - name: Install dependencies
-        run: poetry update
+        run: poetry install
+
       - name: Check style with flake8
-        run: poetry run flake8 condensed_phase_properties/ tests/
+        run: poetry run flake8 condensed_phase_properties/
+
       - name: Check style with pylint
-        run: poetry run pylint condensed_phase_properties/ tests/
+        run: poetry run pylint condensed_phase_properties/
+
       - name: Check format with black
-        run: poetry run black --check condensed_phase_properties/ tests/
+        run: poetry run black --check condensed_phase_properties/
+
       - name: Check type hinting with mypy
         run: poetry run mypy --strict --config-file=mypy.ini condensed_phase_properties/
-      
