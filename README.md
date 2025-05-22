@@ -4,7 +4,7 @@
 [![PyPI version](https://badge.fury.io/py/condensed-phase-properties.svg)](https://badge.fury.io/py/condensed-phase-properties)
 ![versions](https://img.shields.io/pypi/pyversions/condensed-phase-properties.svg)
 -->
-[![GitHub license](https://img.shields.io/github/license/mgancita/condensed-phase-properties.svg)](https://github.com/mgancita/condensed-phase-properties/blob/main/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/apicha/condensed-phase-properties.svg)](https://github.com/apicha/condensed-phase-properties/blob/main/LICENSE)
 
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
