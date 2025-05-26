@@ -11,9 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false  # important to allow mkdocs to push with the token
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
@@ -24,6 +25,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install mkdocs mkdocs-material
+
+      - name: Configure Git user (optional)
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Build and Deploy Docs
         env:
