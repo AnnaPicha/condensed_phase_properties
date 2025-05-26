@@ -30,6 +30,4 @@ jobs:
           pip install mkdocs mkdocs-material
 
       - run: |
-          mkdocs gh-deploy --force --remote-url https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-
-
+          mkdocs gh-deploy --force 
