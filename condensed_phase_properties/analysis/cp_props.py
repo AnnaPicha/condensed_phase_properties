@@ -3,8 +3,7 @@ import numpy as np
 from numpy.typing import NDArray
 from openff.units import unit
 from pint import Quantity
-from typing import Any
-from typing import cast
+from typing import Any, cast, Callable,List
 from collections import namedtuple
 
 
@@ -101,7 +100,7 @@ def calc_heat_of_vaporization(
     temp_traj: NDArray[np.float64],
     box_count: int,
     printing: bool
-) -> Quantity:
+) -> Any:
     """
     Compute the heat of vaporization.
 
@@ -118,11 +117,12 @@ def calc_heat_of_vaporization(
 
 
 def my_bootstrap_hov(
-        liquid_pot: float,
-        mono_pot: float,
-        liquid_temp: float,
+        liquid_pot: NDArray[np.float64],
+        mono_pot: NDArray[np.float64],
+        liquid_temp: NDArray[np.float64],
+        box_count: int,
         Nboot: int,
-        statfun
+        statfun: Callable[[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], int, bool], Any]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_pot = np.array(liquid_pot)
@@ -138,6 +138,7 @@ def my_bootstrap_hov(
             statfun(sample_pot,
                     mono_pot,
                     sample_temp,
+                    box_count,
                     False).magnitude
         )
         resampled_stat.append(bastatistics)
@@ -146,11 +147,12 @@ def my_bootstrap_hov(
 
 
 def my_bootstrap_hcap(
-        liquid_total: float,
+        liquid_total: NDArray[np.float64],
         box_count: int,
-        liquid_temp: float,
+        liquid_temp: NDArray[np.float64],
+        molar_mass: float,
         Nboot: int,
-        statfun
+        statfun: Callable[[NDArray[np.float64], int, float, float, bool], Quantity]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
@@ -165,6 +167,7 @@ def my_bootstrap_hcap(
             statfun(sample_pot,
                     box_count,
                     sample_temp.mean(),
+                    molar_mass,
                     False).magnitude
         )
         resampled_stat.append(bastatistics)
@@ -173,11 +176,11 @@ def my_bootstrap_hcap(
 
 
 def my_bootstrap_texp(
-        liquid_total: float,
-        box_vol: float,
-        liquid_temp: float,
+        liquid_total: NDArray[np.float64],
+        box_vol: NDArray[np.float64],
+        liquid_temp: NDArray[np.float64],
         Nboot: int,
-        statfun
+        statfun: Callable[[NDArray[np.float64], NDArray[np.float64], float, bool], Quantity]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
@@ -202,10 +205,10 @@ def my_bootstrap_texp(
 
 
 def my_bootstrap_icomp(
-        box_vol: float,
-        liquid_temp: float,
+        box_vol: NDArray[np.float64],
+        liquid_temp: NDArray[np.float64],
         Nboot: int,
-        statfun
+        statfun: Callable[[NDArray[np.float64], float, bool], Any]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     box_vol = np.array(box_vol)
@@ -216,7 +219,11 @@ def my_bootstrap_icomp(
         index = np.random.randint(0, len(box_vol), len(box_vol))
         sample_box_vol = box_vol[index]
         sample_temp = liquid_temp[index]
-        icomp = statfun(sample_box_vol, sample_temp.mean(), False).magnitude
+        icomp = statfun(
+            sample_box_vol, 
+            sample_temp.mean(), 
+            False
+            ).magnitude
         resampled_stat.append(icomp)
 
     return np.array(resampled_stat)
