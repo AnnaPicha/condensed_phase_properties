@@ -45,7 +45,7 @@ water can be replaced by methanol, acetone, nma, benzene or hexane.
 
 ## Other used packages
 
-For the calculation of MSD and diffusion constants with respect to the center of mass, the NewAnalysis package was used (https://github.com/cbc-univie/mdy-newanalysis-package). Radial distribution functions were computing using MDAnalysis (https://github.com/MDAnalysis/mdanalysis).
+For the calculation of MSD and diffusion constants with respect to the center of mass, the NewAnalysis package was used (https://github.com/cbc-univie/mdy-newanalysis-package). Radial distribution functions were computed using MDAnalysis (https://github.com/MDAnalysis/mdanalysis).
 
 ## Credits
 
