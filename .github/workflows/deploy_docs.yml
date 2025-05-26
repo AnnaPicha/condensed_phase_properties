@@ -14,7 +14,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: false  # important to allow mkdocs to push with the token
+          persist-credentials: false  # disable automatic token so we can set our own
+
+      - name: Configure git for token authentication
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
@@ -26,17 +32,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install mkdocs mkdocs-material
 
-      - name: Configure Git user (optional)
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Set git remote URL with token
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-  
-
       - name: Build and Deploy Docs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mkdocs gh-deploy --force
+
