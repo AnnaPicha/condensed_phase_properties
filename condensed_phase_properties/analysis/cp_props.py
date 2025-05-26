@@ -3,7 +3,7 @@ import numpy as np
 from numpy.typing import NDArray
 from openff.units import unit
 from pint import Quantity
-from typing import Any, cast, Callable,List
+from typing import Any, cast, Callable
 from collections import namedtuple
 
 
@@ -122,7 +122,13 @@ def my_bootstrap_hov(
         liquid_temp: NDArray[np.float64],
         box_count: int,
         Nboot: int,
-        statfun: Callable[[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], int, bool], Any]
+        statfun: Callable[
+            [NDArray[np.float64],
+             NDArray[np.float64],
+             NDArray[np.float64],
+             int,
+             bool], Any
+             ]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_pot = np.array(liquid_pot)
@@ -152,7 +158,13 @@ def my_bootstrap_hcap(
         liquid_temp: NDArray[np.float64],
         molar_mass: float,
         Nboot: int,
-        statfun: Callable[[NDArray[np.float64], int, float, float, bool], Quantity]
+        statfun: Callable[
+            [NDArray[np.float64],
+             int,
+             float,
+             float,
+             bool], Quantity
+             ]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
@@ -180,7 +192,12 @@ def my_bootstrap_texp(
         box_vol: NDArray[np.float64],
         liquid_temp: NDArray[np.float64],
         Nboot: int,
-        statfun: Callable[[NDArray[np.float64], NDArray[np.float64], float, bool], Quantity]
+        statfun: Callable[
+            [NDArray[np.float64],
+             NDArray[np.float64],
+             float,
+             bool], Quantity
+             ]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     liquid_total = np.array(liquid_total)
@@ -208,7 +225,11 @@ def my_bootstrap_icomp(
         box_vol: NDArray[np.float64],
         liquid_temp: NDArray[np.float64],
         Nboot: int,
-        statfun: Callable[[NDArray[np.float64], float, bool], Any]
+        statfun: Callable[
+            [NDArray[np.float64],
+             float,
+             bool], Any
+             ]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
     box_vol = np.array(box_vol)
@@ -220,8 +241,8 @@ def my_bootstrap_icomp(
         sample_box_vol = box_vol[index]
         sample_temp = liquid_temp[index]
         icomp = statfun(
-            sample_box_vol, 
-            sample_temp.mean(), 
+            sample_box_vol,
+            sample_temp.mean(),
             False
             ).magnitude
         resampled_stat.append(icomp)
