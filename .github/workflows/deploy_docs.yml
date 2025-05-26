@@ -5,21 +5,15 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write  # Needed for pushing to gh-pages
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: false
-
-      - name: Configure git for token authentication
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
       - uses: actions/setup-python@v4
         with:
@@ -29,5 +23,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install mkdocs mkdocs-material
 
-      - run: |
-          mkdocs gh-deploy --force 
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force
