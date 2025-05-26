@@ -3,6 +3,7 @@ import numpy as np
 from numpy.typing import NDArray
 from openff.units import unit
 from pint import Quantity
+from typing import Any
 from typing import cast
 from collections import namedtuple
 
@@ -76,7 +77,7 @@ def calc_isothermal_compressibility(
         volume: NDArray[np.float64],
         temp: float,
         printing: bool
-) -> Quantity:
+) -> Any:
     """
     Compute the isothermal compressibility.
 
