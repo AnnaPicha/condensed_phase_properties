@@ -43,6 +43,10 @@ or
 
 water can be replaced by methanol, acetone, nma, benzene or hexane.
 
+## Other used packages
+
+For the calculations of MSD and diffusion constants with respect to the center of mass, the NewAnalysis package was used (https://github.com/cbc-univie/mdy-newanalysis-package). Radial distribution functions were computing using MDAnalysis (https://github.com/MDAnalysis/mdanalysis).
+
 ## Credits
 
 This package was created with [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [`mgancita/cookiecutter-pypackage`](https://mgancita.github.io/cookiecutter-pypackage/) project template.
