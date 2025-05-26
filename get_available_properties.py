@@ -34,6 +34,10 @@ def load_msd_diffusion(species: str, method: str):
 
 
 species = sys.argv[1]
+if species not in ['water', 'methanol', 'acetone', 'nma', 'hexane', 'benzene']:
+    print('Data available for water, methanol, acetone, nma, hexane, benzene. \n' \
+    'Please use one of those!\n')
+    exit()
 
 props, timeseries = load_initial_properties(species)
 
