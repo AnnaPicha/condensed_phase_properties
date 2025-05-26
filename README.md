@@ -35,6 +35,10 @@ The python script `compute_properties.py` uses the water report in the data fold
 
 or
 
+- `python compute_bootstrapping_samples.py`
+
+or
+
 - `python get_available_properties.py water`
 
 water can be replaced by methanol, acetone, nma, benzene or hexane.
