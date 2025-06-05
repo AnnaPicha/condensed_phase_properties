@@ -17,7 +17,7 @@ def load_initial_properties(species: str):
 
 def load_repetition_properties(species: str, method: str):
     file_name = f"{method}_props_per_run.csv"
-    data_path = resources.files(f"condensed_phase_properties.data.all_property_data.{species}.thermodynamic_properties.5_repetition_runs") / file_name
+    data_path = resources.files(f"condensed_phase_properties.data.all_property_data.{species}.thermodynamic_properties.repetition_runs") / file_name
     with data_path.open("r", encoding="utf-8") as f:
         return pd.read_csv(f, sep="&")
     
