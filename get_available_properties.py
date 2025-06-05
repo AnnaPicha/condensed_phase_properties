@@ -47,9 +47,13 @@ print(props)
 print("-"*50)
 print("\n")
 
-for theory in ['mm', 'ani2x', 'mace_s']:
+if species in ['water', 'acetone', 'hexane']:
+    theories = ['mm', 'ani2x', 'mace_s', 'mace_m_fp32']
+else:
+    theories = ['mm', 'ani2x', 'mace_s']
+for theory in theories:
     water_5_reps = load_repetition_properties(species, theory)
-    print(f"Properties from 5 repitition NPT runs for {species} with {theory}")
+    print(f"Properties from repitition NPT runs for {species} with {theory}")
     print(water_5_reps)
     print("-"*50)
     print("\n")

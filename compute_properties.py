@@ -26,7 +26,7 @@ skip_size = 0.090909
 box_count=572
 molar_mass = 18.015 * unit.gram / unit.mole
 
-theories = ['mm', 'ani2x', 'mace_s', 'mace_m']
+theories = ['mm', 'ani2x', 'mace_s', 'mace_m', 'mace_m_fp32']
 
 print("\nCOMPUTING CONDENSED PHASE PROPERTIES\n")
 for theory in theories:

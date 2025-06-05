@@ -46,7 +46,8 @@ box_count=572
 molar_mass = 18.015 * unit.gram / unit.mole
 Nboot=100
 
-theories = ['mm', 'ani2x', 'mace_s', 'mace_m']
+
+theories = ['mm', 'ani2x', 'mace_s', 'mace_m', 'mace_m_fp32']
 
 print("\nCOMPUTING BOOTSTRAPPING VALUES FOR CONDENSED PHASE PROPERTIES\n")
 for theory in theories:
@@ -60,7 +61,7 @@ for theory in theories:
     liquid_cut = liquid[skip_part_liquid-1:-1] # skip the first 10%
 
 
-    boot_hov = analysis.my_bootstrap_hov(liquid_pot=liquid_cut["Potential Energy (kJ/mole)"],
+    boot_hov = analysis.bootstrap_hov(liquid_pot=liquid_cut["Potential Energy (kJ/mole)"],
                                                mono_pot=gas_cut["Potential Energy (kJ/mole)"],
                                                liquid_temp=liquid_cut["Temperature (K)"],
                                                box_count=box_count,
@@ -68,7 +69,7 @@ for theory in theories:
                                                statfun=analysis.calc_heat_of_vaporization
                                                )
 
-    boot_hcap = analysis.my_bootstrap_hcap(liquid_total=liquid_cut["Total Energy (kJ/mole)"],
+    boot_hcap = analysis.bootstrap_hcap(liquid_total=liquid_cut["Total Energy (kJ/mole)"],
                                                  box_count=box_count,
                                                  liquid_temp=liquid_cut["Temperature (K)"],
                                                  molar_mass=molar_mass,
@@ -76,14 +77,14 @@ for theory in theories:
                                                  statfun=analysis.calc_heat_capacity_units
                                                  )
 
-    boot_texp = analysis.my_bootstrap_texp(liquid_total=liquid_cut["Total Energy (kJ/mole)"],
+    boot_texp = analysis.bootstrap_texp(liquid_total=liquid_cut["Total Energy (kJ/mole)"],
                                                  box_vol=liquid_cut['Box Volume (nm^3)'],
                                                  liquid_temp=liquid_cut["Temperature (K)"],
                                                  Nboot=Nboot,
                                                  statfun=analysis.calc_thermal_expansion
                                                  )
 
-    boot_icomp= analysis.my_bootstrap_icomp(box_vol=liquid_cut['Box Volume (nm^3)'],
+    boot_icomp= analysis.bootstrap_icomp(box_vol=liquid_cut['Box Volume (nm^3)'],
                                                   liquid_temp=liquid_cut["Temperature (K)"],
                                                   Nboot=Nboot,
                                                   statfun=analysis.calc_isothermal_compressibility
