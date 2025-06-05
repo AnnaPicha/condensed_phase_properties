@@ -1,9 +1,8 @@
 """Analysis package for condensed phase properties."""
 import numpy as np
 from numpy.typing import NDArray
-from openff.units import unit
-from pint import Quantity
-from typing import Any, cast, Callable
+from openff.units import unit, Quantity
+from typing import cast, Callable
 from collections import namedtuple
 
 
@@ -76,7 +75,7 @@ def calc_isothermal_compressibility(
         volume: NDArray[np.float64],
         temp: float,
         printing: bool
-) -> Any:
+) -> Quantity:
     """
     Compute the isothermal compressibility.
 
@@ -100,7 +99,7 @@ def calc_heat_of_vaporization(
     temp_traj: NDArray[np.float64],
     box_count: int,
     printing: bool
-) -> Any:
+) -> Quantity:
     """
     Compute the heat of vaporization.
 
@@ -127,7 +126,7 @@ def bootstrap_hov(
              NDArray[np.float64],
              NDArray[np.float64],
              int,
-             bool], Any
+             bool], Quantity
              ]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
@@ -228,7 +227,7 @@ def bootstrap_icomp(
         statfun: Callable[
             [NDArray[np.float64],
              float,
-             bool], Any
+             bool], Quantity
              ]
 ) -> NDArray[np.float64]:
     """Calculate bootstrap statistics for a sample x."""
