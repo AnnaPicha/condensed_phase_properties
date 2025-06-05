@@ -116,7 +116,7 @@ def calc_heat_of_vaporization(
     return val
 
 
-def my_bootstrap_hov(
+def bootstrap_hov(
         liquid_pot: NDArray[np.float64],
         mono_pot: NDArray[np.float64],
         liquid_temp: NDArray[np.float64],
@@ -152,7 +152,7 @@ def my_bootstrap_hov(
     return np.array(resampled_stat)
 
 
-def my_bootstrap_hcap(
+def bootstrap_hcap(
         liquid_total: NDArray[np.float64],
         box_count: int,
         liquid_temp: NDArray[np.float64],
@@ -187,7 +187,7 @@ def my_bootstrap_hcap(
     return np.array(resampled_stat)
 
 
-def my_bootstrap_texp(
+def bootstrap_texp(
         liquid_total: NDArray[np.float64],
         box_vol: NDArray[np.float64],
         liquid_temp: NDArray[np.float64],
@@ -221,7 +221,7 @@ def my_bootstrap_texp(
     return np.array(resampled_stat)
 
 
-def my_bootstrap_icomp(
+def bootstrap_icomp(
         box_vol: NDArray[np.float64],
         liquid_temp: NDArray[np.float64],
         Nboot: int,
